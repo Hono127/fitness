@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { supabase } from '../lib/supabaseClient';
 
 const useUserName = () => {
-  const searchParams = useSearchParams();
+  const router = useRouter();
   const [userName, setUserName] = useState<string | null>(null);
 
   useEffect(() => {
-    const userNameParam = searchParams.get('userName');
+    const userNameParam = new URLSearchParams(window.location.search).get('userName');
     if (userNameParam) {
       setUserName(userNameParam);
     } else {
@@ -19,7 +19,7 @@ const useUserName = () => {
       };
       getUserInfo();
     }
-  }, [searchParams]);
+  }, [router]);
 
   return userName;
 };
