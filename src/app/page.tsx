@@ -12,7 +12,7 @@ import GoalSelection from './components/molecules/GoalSelection';
 import InputHigh from './components/molecules/InputHigh';
 import InputWeight from './components/molecules/InputWeight';
 import InputAge from './components/molecules/InputAge';
-import ResultCalc from './components/organisms/ResultDisplay';
+import ResultCalc from './components/organisms/ResultCalc';
 import { useSaveCaluculation } from './hooks/useSaveCalculation';
 import UseUserId from './hooks/useUserId';
 import { useRouter } from 'next/navigation';
@@ -31,7 +31,6 @@ const Home = () => {
   const userName = useUserName();
   const router = useRouter();
   const { saveCaluculation } = useSaveCaluculation()
-  // const [userId, setUserId] = useState<string | null>(null); // ここでuserIdを管理する
 
 
   useEffect(() => {
@@ -146,6 +145,12 @@ const Home = () => {
 
       const calculationResult = {
         user_id: userId,
+        gender: gender,
+        weight: parseFloat(weight),
+        height: parseFloat(height),
+        age: parseInt(age, 10),
+        goal: goal,
+        activity_level: activityLevel,
         bmr: bmr,
         calories: calories,
         protein: macros.protein,

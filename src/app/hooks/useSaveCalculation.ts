@@ -3,6 +3,12 @@ import { useState } from "react";
 
 type CalculationResult = {
   user_id: string;
+  gender: string;
+  weight: number
+  height: number
+  age: number
+  goal: string;
+  activity_level: string
   bmr: number;
   calories: number;
   protein: number;
@@ -23,6 +29,12 @@ export const useSaveCaluculation = () => {
       .insert([
         {
           user_id: calculation.user_id,
+          gender: calculation.gender,
+          weight: calculation.weight,
+          height: calculation.height,
+          age: calculation.age,
+          goal: calculation.goal,
+          activity_level: calculation.activity_level,
           bmr: calculation.bmr,
           calories: calculation.calories,
           protein: calculation.protein,

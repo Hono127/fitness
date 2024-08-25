@@ -5,13 +5,13 @@ import InputBox from '../molecules/InputBox';
 import ResultClacBox from '../molecules/ResultClacBox';
 import LabelHead from '../atoms/LabelHead/LabelHead';
 
-interface ResultDisplayProps {
+interface ResultCalcProps {
   bmr: number;
   calories: number;
   macros: { protein: number; fat: number; carbs: number };
 }
 
-const ResultCalc: FC<ResultDisplayProps> = ({ bmr, calories, macros }) => {
+const ResultCalc: FC<ResultCalcProps> = ({ bmr, calories, macros }) => {
   return (
     <ContentsBox>
       <Heading2>計算結果</Heading2>

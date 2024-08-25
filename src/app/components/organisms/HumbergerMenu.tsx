@@ -35,7 +35,7 @@ const HamburgerMenu = () => {
   };
 
   return (
-    <div className='relative block md:hidden' >
+    <div className='relative block' >
       <button
         className='flex flex-col items-center justify-center w-8 h-8 space-y-1 focus:outline-none'
         onClick={toggleMenu}
@@ -53,6 +53,7 @@ const HamburgerMenu = () => {
       {isOpen && (
         <div className='absolute top-16 right-0 mt-2 w-48 bg-slate-400 rounded-md shadow-lg z-10'>
           <nav className='flex flex-col p-4 space-y-2'>
+            <a href="/" className="hover:underline block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md">トップページ</a>
             {user && (
               <a href="/foods" className="hover:underline block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md">食品データベース</a>
             )}
@@ -64,6 +65,9 @@ const HamburgerMenu = () => {
             )}
             {user && (
               <a href="/progress" className="hover:underline block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md">進捗報告</a>
+            )}
+            {user && (
+              <a href="/mypage" className="hover:underline block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md">マイページ</a>
             )}
             {user && (
               <a href="/settings" className="hover:underline block px-4 py-2 text-gray-800 hover:bg-gray-200 rounded-md">設定</a>
