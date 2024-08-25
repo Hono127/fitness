@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '@/app/lib/supabaseClient';
-import useUserId from './useUserId';
+import UseUserId from './useUserId';
 
 type CalculationResult = {
   id: string;
@@ -24,8 +24,8 @@ export const useFetchCalculations = () => {
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
-  const fetchCalculations = async () => { // useEffect の外に移動
-    setLoading(true);
+
+  const fetchCalculations = useCallback(async () => {
     if (!userId) {
       setError('ユーザーIDが取得できませんでした');
       setLoading(false);
@@ -45,11 +45,11 @@ export const useFetchCalculations = () => {
     }
 
     setLoading(false);
-  };
+  }, [userId]);
 
   useEffect(() => {
     const fetchUserId = async () => {
-      const id = await useUserId();
+      const id = await UseUserId();
       setUserId(id);
     };
 
@@ -60,7 +60,7 @@ export const useFetchCalculations = () => {
     if (userId) {
       fetchCalculations();
     }
-  }, [userId]);
+  }, [userId, fetchCalculations]);
 
   return { calculations, loading, error, refetch: fetchCalculations };
 };
