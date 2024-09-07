@@ -1,21 +1,39 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Wrapper from '../components/templates/Wrapper';
 import Heading1 from '../components/atoms/Heading/Heading1';
-import Heading2 from '../components/atoms/Heading/Heading2';
 import { useFetchCalculations } from '../hooks/useFetchCalculations';
 import ResultClacBox from '../components/molecules/ResultClacBox';
 import DeleteWarningModal from '../components/molecules/DeleteWarningModal';
 import { useDeleteCalculation } from '../hooks/useDeleteCalculation';
 import ContentsBox from '../components/molecules/ContentsBox';
+import InputBox from '../components/molecules/InputBox';
+import LabelHead from '../components/atoms/LabelHead/LabelHead';
+import { supabase } from '../lib/supabaseClient';
+import Link from 'next/link';
 
 const MyPage = () => {
   const { calculations, loading, error, refetch } = useFetchCalculations();
   const { deleteCalculation } = useDeleteCalculation()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedCalculationId, setSelectedCalculationId] = useState<string | null>(null);
+  const [email, setEmail] = useState<string | undefined>(undefined);
 
+
+  useEffect(() => {
+    const getEmail = async () => {
+      const { data: { user }, error } = await supabase.auth.getUser();
+      if (error) {
+        console.log('ユーザー情報の取得に失敗しました：', error.message);
+        return;
+      }
+      if (user) {
+        setEmail(user.email);
+      }
+    }
+    getEmail();
+  }, [])
 
   const handleOpenModal = () => {
     if (showCalculation) {
@@ -91,11 +109,22 @@ const MyPage = () => {
     }
   }
 
+
   return (
     <Wrapper>
       <Heading1>マイページ</Heading1>
-      <Heading2>保存された計算結果</Heading2>
-      <div>
+      <InputBox>
+        <LabelHead>登録済みメールアドレス</LabelHead>
+        <span className="flex items-center px-3 py-2 h-12 bg-gray-800 text-white border border-gray-600 rounded-md w-full">{email}</span>
+        <Link href="/change-email" className='underline hover:text-blue-600 text-sm'>メールアドレスを変更する</Link>
+      </InputBox>
+      <InputBox>
+        <LabelHead>パスワード</LabelHead>
+        <span className='flex items-center px-3 py-2 h-12 bg-gray-800 text-white border border-gray-600 rounded-md w-full'>********</span>
+        <Link href="/change-password" className='underline hover:text-blue-600 text-sm'>パスワードを変更する</Link>
+      </InputBox>
+      <InputBox>
+        <LabelHead>保存された計算結果</LabelHead>
         {!showCalculation ? (
           <p>保存された計算結果がありません。</p>
         ) : (
@@ -113,7 +142,7 @@ const MyPage = () => {
             <li className='flex gap-3 items-center'>炭水化物:<ResultClacBox divClassName='flex-1' spanClassName='w-full' units='g/日'>{Math.floor(showCalculation.carbs)}</ResultClacBox></li>
           </ul>
         )}
-      </div>
+      </InputBox>
       {showCalculation &&
         <ContentsBox>
           <button
