@@ -33,7 +33,7 @@ const Signup = () => {
     if (error) {
       setError('会員登録に失敗しました。' + error.message);
     } else {
-      router.push('/login');
+      router.push('/signup/confirmation');
     }
   };
 

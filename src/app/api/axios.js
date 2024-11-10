@@ -1,9 +1,10 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000', // APIのベースURLを設定
+  baseURL: process.env.NEXT_PUBLIC_SUPABASE_URL,
   headers: {
     'Content-Type': 'application/json',
+    apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
   },
 });
 

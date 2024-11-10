@@ -65,6 +65,7 @@ const Login = () => {
         </InputBox>
         <PrimaryButton type='submit'>ログイン</PrimaryButton>
         <Link href='/signup' className='underline hover:text-blue-600'>会員登録はこちら</Link>
+        <Link href='/login/forgotPassword' className='underline hover:text-blue-600'>パスワードを忘れた方</Link>
       </form>
     </Wrapper>
   );
